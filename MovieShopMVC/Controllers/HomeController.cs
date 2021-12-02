@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Models;
 using System.Diagnostics;
 
@@ -6,15 +7,19 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private MovieService _movieService;
+        public HomeController()
         {
-            _logger = logger;
+            _movieService = new MovieService();
         }
 
         public IActionResult Index()
         {
+            //3 way to pass the data/models from controller action methods to views.
+            //1, pass the models in the view method
+            //2, viewbag
+            //3, viewdata
+            var movieCards = _movieService.GetHighestGrossingMovies();
             return View();
         }
 
