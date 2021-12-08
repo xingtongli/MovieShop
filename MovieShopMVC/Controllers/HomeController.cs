@@ -9,9 +9,11 @@ namespace MovieShopMVC.Controllers
     public class HomeController : Controller
     {
         private readonly IMovieService _movieService;
-        public HomeController(IMovieService movieService)
+        private readonly IGenreService _genreService;
+        public HomeController(IMovieService movieService, IGenreService genreService)
         {
             _movieService = movieService;
+            _genreService = genreService;
         }
 
         public IActionResult Index()
@@ -20,13 +22,16 @@ namespace MovieShopMVC.Controllers
             //1, pass the models in the view method
             //2, viewbag
             //3, viewdata
+            
             var movieCards = _movieService.GetHighestGrossingMovies();
             return View();
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            // for testing , to see if i am getting list of genres
+            var genres = _genreService.GetAllGenres();
+            return View(genres);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
