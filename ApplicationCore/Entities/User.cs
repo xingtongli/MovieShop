@@ -22,8 +22,10 @@ namespace ApplicationCore.Entities
         public bool? IsLocked { get; set; }
         public int? AccessFailedCount { get; set; }
         public string? ProfilePictureUrl { get; set; }
+
         public List<UserRole> RolesOfUser { get; set; }
         public List<Review> MoviesOfUser { get; set; }
-
+        public List<Favorite> Favorites { get; set; }
+        public List<Purchase> Purchases { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace MovieShopMVC.Controllers
             //3, viewdata
             
             var movieCards = _movieService.GetHighestGrossingMovies();
-            return View();
+            return View(movieCards);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,160 @@
+﻿@model ApplicationCore.Models.MovieDetailsResponseModel
+@*
+image-orientationplay Movie Details such a-moz-text-size-adjustormation
+    Cast Information
+    Poster
+    Rating
+*@
+@{
+    ViewData["Title"] = "Detail Page";
+}
+
+<div class="bg-img" style="background-image:url(@Model.BackdropUrl)">
+<div class="container">
+    <div class="row">
+        
+            <div class="col-4">
+                <div class="row">
+                    <div class="col offset-1">
+                        <div>
+                            <img src="@Model.PosterUrl" class="img" alt="@Model.Title"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col offset-1">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-white">
+                            @Model.Title
+                        </h1>
+                        <small class="text-secondary"> @Model.Tagline </small>
+                        <div class="row">
+                            <div class="col" text-secondary font-weight-bold mt-1>
+                                <p>@Model.RunTime m | @Model.ReleaseDate.Value.Date.Year</p>
+                            </div>
+                            <div class="col">
+                                @foreach (var genre in Model.Genres)
+                                {
+                                    <a class="badge text-white rounded-pill bg-dark" asp-route-id="@genre.Id"> @genre.Name </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h4>
+                            <span class="badge bg-success">
+                                @Model.Rating?.ToString("0.0")
+                            </span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-white">
+                        @Model.Overview
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col mt-1 offset-1">
+                <ul class="list-group bg-transparent">
+                    <li class="list-group-item bg-transparent"></li>
+                    <li class="list-group-item bg-transparent">
+                        <button type="button" class="btn btn-outline-light btn-block btn-sm">
+                            <i class="far fa-edit mr-1"></i>
+                            REVIEW
+                        </button>
+                    </li>
+
+                    <li class="list-group-item bg-transparent">
+                        <a class="btn btn-light btn-block btn-sm">
+                            BUY @Model.Price
+                        </a>
+
+                        <a class="btn btn-light btn-block btn-sm">
+                            WATCH MOVIE
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-4 bg-light">
+        <h5>MOVIE FACTS</h5>
+        <hr>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Release Date
+                <span class="badge bg-dark rounded-pill text-white">
+                    @Model.ReleaseDate.Value.ToShortDateString()
+                </span>
+            </li>
+            <li class="list-group-item">
+                Run Time
+                <span class="badge bg-dark rounded-pill text-white">
+                    @Model.RunTime.Value m
+                </span>
+            </li>
+            <li class="list-group-item">
+                Box Office
+                <span class="badge bg-dark rounded-pill text-white">
+                    @Model.Revenue?.ToString("C0")
+                </span>
+            </li>
+            <li class="list-group-item">
+                Budget
+                <span class="badge bg-dark rounded-pill text-white">
+                    @Model.Budget?.ToString("C0")
+                </span>
+            </li>
+        </ul>
+        <span style="margin-left:30px;"></span>
+        <h5>TRAILERS</h5>
+        <hr>
+        <ul class="list-group list-group-flush">
+            @foreach (var trailer in Model.Trailers)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        @trailer.TrailerUrl
+                    </div>
+                </li>
+
+            }
+        </ul>
+    </div>
+
+
+    <div class="col-8">
+        <h5>CAST</h5>
+        <ul class="list-group list-group-flush">
+
+            @foreach (var cast in Model.Casts)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="@cast.PosterUrl"
+                                 class="rounded-circle"
+                                 style="width:30px; height: 45px;"
+                                 alt="@cast.Name" />
+                        </div>
+                        <div class="col-3">
+                            @cast.Name
+                        </div>
+                        <div class="col-4">
+                            @cast.Character
+                        </div>
+                    </div>
+                </li>
+                
+            }
+
+        </ul>
+
+    </div>
+</div>
