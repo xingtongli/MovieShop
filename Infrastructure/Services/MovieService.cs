@@ -22,9 +22,9 @@ namespace Infrastructure.Services
         {
             _movieRepository = movieRepository;
         }
-        public IEnumerable<MovieCardResponseModel> GetHighestGrossingMovies()
+        public async Task<IEnumerable<MovieCardResponseModel>> GetHighestGrossingMovies()
         {
-            var movies = _movieRepository.Get30HighestGrossingMovies();
+            var movies = await _movieRepository.Get30HighestGrossingMovies();
             var movieCards = new List<MovieCardResponseModel>();
             foreach (var movie in movies)
             {
@@ -36,9 +36,9 @@ namespace Infrastructure.Services
             return movieCards;
 
         }
-        public MovieDetailsResponseModel GetMovieDetailsById(int id)
+        public async Task<MovieDetailsResponseModel> GetMovieDetailsById(int id)
         {
-            var movie = _movieRepository.GetById(id);
+            var movie = await _movieRepository.GetById(id);
 
             // map movie entity into Movie Details Model
             // Automapper that can be used for mapping one object to another object

@@ -19,14 +19,14 @@ namespace Infrastructure.Services
         {
             _userRepository = userRepository;
         }
-        public int RegisterUser(UserRegisterRequestModel model)
+        public async Task<int> RegisterUser(UserRegisterRequestModel model)
         {
             // make sure the email user entered does not exists in our database
-            var dbUser = _userRepository.GetUserByEmail(model.Email);
+            var dbUser = await _userRepository.GetUserByEmail(model.Email);
 
             if (dbUser != null)
                 return 0;
-            //  throw new Exception("Email already exists and please check");
+            //  throw new Exception("Email already exists and please check"); 
 
             // continue with registration
             // create a unique salt
@@ -45,15 +45,38 @@ namespace Infrastructure.Services
                 LastName = model.LastName
             };
 
-            var creaedUser = _userRepository.Add(user);
+            var creaedUser = await _userRepository.Add(user);
             return creaedUser.Id;
             // save to the database
             // reutn back
         }
 
-        public UserLoginResponseModel ValidateUser(LoginRequestModel model)
+        public async Task<UserLoginResponseModel> ValidateUser(LoginRequestModel model)
         {
-            throw new NotImplementedException();
+            //check if the hashed password is correct
+            var user = await _userRepository.GetUserByEmail(model.Email);
+            if(user == null)
+            {
+                return null;
+            }
+            //hash the password the user entered with the salt from the database
+
+            var hashedPassword = GetHashedPassword(model.Password, user.Salt);
+            //compare the newly created hashpassword awith database password
+
+            if(hashedPassword == user.HashedPassword)
+            {
+                var userLoginResponseModel = new UserLoginResponseModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    DateOfBirth = user.DateOfBirth,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                };
+                return userLoginResponseModel;
+            }
+            return null;
         }
 
         private string GenerateSalt()

@@ -15,15 +15,19 @@ namespace MovieShopMVC.Controllers
             _movieService = movieService;
             _genreService = genreService;
         }
-
-        public IActionResult Index()
+        // u1, u2 u3  u100=>
+        // thread pool => collection of threads => 100 t1....t100
+        // thread => worker in a factory =>
+        public async Task<IActionResult> Index()
         {
             //3 way to pass the data/models from controller action methods to views.
             //1, pass the models in the view method
             //2, viewbag
             //3, viewdata
-            
-            var movieCards = _movieService.GetHighestGrossingMovies();
+            // I/O bound operation => database calls, file calls, http call
+            // CPU bound operation => resizing an image, rading pixel image, calculating Pi number
+            // calculating some algorthm 
+            var  movieCards = await _movieService.GetHighestGrossingMovies();
             return View(movieCards);
         }
 
