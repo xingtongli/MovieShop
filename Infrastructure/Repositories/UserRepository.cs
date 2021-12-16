@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,22 @@ namespace Infrastructure.Repositories
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
             return user;
+        }
+        public async Task<User> GetUserDetails(int id)
+        {
+            var profile = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return profile;
+        }
+        public async Task<List<Favorite>> GetUserFavoriteMovies(int id)
+        {
+            var favorite = await _dbContext.Favorites.Include(x => x.Movie).Where(x => x.UserId == id).ToListAsync();
+            return favorite;
+        }
+
+        public async Task<List<Purchase>> GetUserPurchaseMovies(int id)
+        {
+            var purchase = await _dbContext.Purchases.Include(x => x.Movie).Where(x => x.UserId == id).ToListAsync();
+            return purchase;
         }
     }
 }
