@@ -10,10 +10,12 @@ namespace MovieShopMVC.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly IGenreService _genreService;
-        public HomeController(IMovieService movieService, IGenreService genreService)
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(IMovieService movieService, IGenreService genreService,ILogger<HomeController> logger)
         {
             _movieService = movieService;
             _genreService = genreService;
+            _logger = logger;
         }
         // u1, u2 u3  u100=>
         // thread pool => collection of threads => 100 t1....t100
