@@ -36,6 +36,33 @@ namespace Infrastructure.Services
             return movieCards;
 
         }
+        public async Task<IEnumerable<MovieCardResponseModel>> GetHighestRatedMovies()
+        {
+            var movies = await _movieRepository.Get30HighestRatedMovies();
+            var movieCards = new List<MovieCardResponseModel>();
+            foreach (var movie in movies)
+            {
+                movieCards.Add(
+                    new MovieCardResponseModel { Id = movie.Id, PosterUrl = movie.PosterUrl, Title = movie.Title }
+                    );
+            }
+
+            return movieCards;
+
+        }
+        public async Task<IEnumerable<MovieCardResponseModel>> GetAllMovies()
+        {
+            var movies = await _movieRepository.GetAllMovies();
+            var movieCards = new List<MovieCardResponseModel>();
+            foreach (var movie in movies)
+            {
+                movieCards.Add(
+                    new MovieCardResponseModel { Id = movie.Id, PosterUrl = movie.PosterUrl, Title = movie.Title }
+                    );
+            }
+
+            return movieCards;
+        }
         public async Task<MovieDetailsResponseModel> GetMovieDetailsById(int id)
         {
             var movie = await _movieRepository.GetById(id);

@@ -10,6 +10,6 @@ namespace ApplicationCore.ServicesInterfaces
     public interface IAccountService
     {
         Task<int> RegisterUser(UserRegisterRequestModel model);
-        Task<UserLoginResponseModel> ValidateUser(LoginRequestModel model);
+        Task<UserLoginResponseModel> ValidateUser(UserLoginResponseModel model);
     }
 }

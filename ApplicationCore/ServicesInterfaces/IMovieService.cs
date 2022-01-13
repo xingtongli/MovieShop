@@ -12,5 +12,7 @@ namespace ApplicationCore.ServicesInterfaces
         // Expose the methods thgat are required by the client/views
         Task<IEnumerable<MovieCardResponseModel>> GetHighestGrossingMovies();
         Task<MovieDetailsResponseModel> GetMovieDetailsById(int id);
+        Task<IEnumerable<MovieCardResponseModel>> GetHighestRatedMovies();
+        Task<IEnumerable<MovieCardResponseModel>> GetAllMovies();
     }
 }

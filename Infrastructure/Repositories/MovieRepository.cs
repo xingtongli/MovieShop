@@ -24,6 +24,16 @@ namespace Infrastructure.Repositories
             var movies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();
             return movies;
         } 
+        public async Task <IEnumerable<Movie>> Get30HighestRatedMovies()
+        {
+            var movies = await _dbContext.Movies.OrderByDescending(m=>m.Rating).Take(30).ToListAsync();
+            return movies;
+        }
+        public async Task<IEnumerable<Movie>> GetAllMovies()
+        {
+            var movies = await _dbContext.Movies.ToListAsync();
+            return movies;
+        }
         public override async Task<Movie> GetById(int id)
         {
             var movieDetails = _dbContext.Movies.Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
@@ -36,5 +46,11 @@ namespace Infrastructure.Repositories
             movieDetails.Rating = rating;
             return movieDetails;
         }
+        public async Task<IEnumerable<Movie>> GetByGenreId(int id)
+        {
+            var movies = _dbContext.Movies.Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre);
+            return movies;
+        }
+
     }
 }

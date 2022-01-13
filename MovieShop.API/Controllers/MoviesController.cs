@@ -13,6 +13,30 @@ namespace MovieShop.API.Controllers
         {
             _movieService = movieService;   
         }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetMovies()
+        {
+            var movies = await _movieService.GetAllMovies();
+            if (!movies.Any())
+            {
+                return NotFound();
+            }
+            return Ok(movies);
+        }
+        [HttpGet]
+        [Route("toprated")]
+        public async Task<IActionResult> GetTopRatedMovies()
+        {
+            var movies = await _movieService.GetHighestRatedMovies();
+            if (!movies.Any())
+            {
+                return NotFound();
+            }
+            return Ok(movies);
+        }
+
         [HttpGet]
         [Route("toprevenue")]
         public async Task<IActionResult> GetTopRevenueMovies()

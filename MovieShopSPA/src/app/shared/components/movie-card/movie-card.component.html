@@ -1,0 +1,7 @@
+<div class="card mb-4 bg-light">
+    <!-- Navigate to Movie Details Component, routerlink -->
+    <a [routerLink]="[ '/movies/details', movieCard.id]">
+
+        <img src="{{movieCard.posterUrl}}" class="img-fluid rounded" />
+    </a>
+</div>
